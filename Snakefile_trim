@@ -1,0 +1,13 @@
+#snakefile
+
+rule all:
+	input: 
+		expand("resultsTrimming/trimmed_{sequence}.fastq", sequence=config["sequences"])
+		
+rule trim:
+    input:
+        fin="sequencesTrimming/{sequence}.fastq"
+    output:
+        fout="resultsTrimming/trimmed_{sequence}.fastq"
+    shell:
+    	"fastp -i {input.fin} -o {output.fout} -h report_trimming.html"
